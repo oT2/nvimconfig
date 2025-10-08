@@ -6,17 +6,26 @@
 --
 -- Or remove existing autocmds by their group name (which is prefixed with `lazyvim_` for the defaults)
 -- e.g. vim.api.nvim_del_augroup_by_name("lazyvim_wrap_spell")
-vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+-- vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+--   callback = function()
+--     -- Only show if there's a diagnostic under cursor
+--     if not vim.b.showing_diagnostics then
+--       local opts = {
+--         focus = false,
+--         scope = "cursor",
+--         border = "rounded",
+--         close_events = { "CursorMoved", "InsertEnter", "BufLeave" },
+--       }
+--       vim.diagnostic.open_float(nil, opts)
+--     end
+--   end,
+-- })
+vim.api.nvim_create_autocmd("BufWritePre", {
+  pattern = "*",
   callback = function()
-    -- Only show if there's a diagnostic under cursor
-    if not vim.b.showing_diagnostics then
-      local opts = {
-        focus = false,
-        scope = "cursor",
-        border = "rounded",
-        close_events = { "CursorMoved", "InsertEnter", "BufLeave" },
-      }
-      vim.diagnostic.open_float(nil, opts)
-    end
+    require("config.ot2header").update_header()
   end,
 })
+vim.api.nvim_create_user_command("AddHeader", function()
+  require("config.ot2header").insert_header()
+end, {})

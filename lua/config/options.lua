@@ -2,4 +2,6 @@
 -- Default options that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/options.lua
 -- Add any additional options here
 vim.opt.clipboard = ""
-vim.opt.colorcolumn = "81"
+vim.opt.colorcolumn = "120"
+
+vim.opt.shell = "/usr/bin/fish"
